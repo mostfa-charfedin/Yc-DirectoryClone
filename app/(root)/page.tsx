@@ -4,27 +4,19 @@ import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { auth } from "@/auth";
 
-export default async function Home({searchParams}: { searchParams: Promise<{ query?: string }>;
+export default async function Home({
+                                       searchParams,
+                                   }: {
+    searchParams: Promise<{ query?: string }>;
 }) {
     const query = (await searchParams).query;
-  //  const params = { search: query || null };
+    const params = { search: query || null };
 
     const session = await auth();
 
     console.log(session?.id);
 
-    const posts =[{
-        _createdAt: 'yesterday',
-        views : 55,
-        author: {_id: 1},
-        description : "description text ",
-        image: "/logo.png",
-        category: "Robots",
-        title: "We RObots"
-
-    }];
-
-    //const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
+    const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
 
     return (
         <>
